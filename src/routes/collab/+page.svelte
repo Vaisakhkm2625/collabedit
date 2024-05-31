@@ -1,4 +1,6 @@
 <script>
+	import '@fortawesome/fontawesome-free/css/all.min.css';
+
 	import { Editor } from '@tiptap/core';
 	import { StarterKit } from '@tiptap/starter-kit';
 	import Collaboration from '@tiptap/extension-collaboration';
@@ -47,15 +49,18 @@
 
 editer
 {#if editor}
-	editer
+	<br />
+	<button on:click={() => editor.chain().focus().toggleItalic().run()}>
+		<i class="fa-solid fa-italic"></i>
+	</button>
+	<br />
 {/if}
 
-<div class="border1" bind:this={element} />
+<div bind:this={element} />
 
 <style>
-	.border1 {
-		border: 1px solid black;
-		height: 50vh;
-		width: 50vh;
+	:global(.ProseMirror) {
+		border: 1px solid #ddd;
+		border-radius: 5px;
 	}
 </style>
