@@ -10,6 +10,8 @@
 	import { HocuspocusProvider } from '@hocuspocus/provider';
 	import { onMount } from 'svelte';
 
+	import { getRandomName, getRandomColor } from './random_name';
+
 	let ydoc = new Y.Doc();
 	let element;
 	let editor;
@@ -19,6 +21,8 @@
 		name: 'example-document',
 		document: ydoc
 	});
+	let random_name = getRandomName();
+	let random_color = getRandomColor();
 
 	onMount(() => {
 		editor = new Editor({
@@ -32,7 +36,7 @@
 				}),
 				CollaborationCursor.configure({
 					provider,
-					user: { name: 'John Doe', color: '#ffcc00' }
+					user: { name: random_name, color: random_color }
 				}),
 				Highlight.configure({
 					HTMLAttributes: {
@@ -207,7 +211,11 @@
 	];
 </script>
 
-editer
+<h1 style="text-align: center;">Collab Edit</h1>
+
+name: {random_name}
+{random_color}
+
 {#if editor}
 	<br />
 	{#each buttons as button}
