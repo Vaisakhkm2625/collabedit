@@ -16,13 +16,32 @@
 	let element;
 	let editor;
 
+	let m = { x: 0, y: 0 };
+	let awarenessState = [];
+
 	let provider = new HocuspocusProvider({
 		url: 'ws://127.0.0.1:1234',
 		name: 'example-document',
-		document: ydoc
+		document: ydoc,
+		onAwarenessUpdate: ({ states }) => {
+			console.log(states);
+			awarenessState = states;
+		}
 	});
 	let random_name = getRandomName();
 	let random_color = getRandomColor();
+
+	let mouseX = 0;
+	let mouseY = 0;
+
+	function updateAwareness() {
+		provider.setAwarenessField('user', {
+			name: random_name,
+			color: random_color,
+			mouseX: m.x,
+			mouseY: m.y
+		});
+	}
 
 	onMount(() => {
 		editor = new Editor({
@@ -211,26 +230,54 @@
 	];
 </script>
 
-<h1 style="text-align: center;">Collab Edit</h1>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+	on:mousemove={(e) => {
+		m = { x: e.clientX, y: e.clientY };
+		updateAwareness();
+	}}
+>
+	<h1 style="text-align: center;">Collab Edit</h1>
 
-name: {random_name}
-{random_color}
+	name: {random_name}
+	{random_color}
+	<input type="text" bind:value={random_name} on:change={updateAwareness} />
 
-{#if editor}
-	<br />
-	{#each buttons as button}
-		<button title={button.name} on:click={button.command}>
-			<i class={button.icon}></i>
-		</button>
+	{#if editor}
+		<br />
+		{#each buttons as button}
+			<button title={button.name} on:click={button.command}>
+				<i class={button.icon}></i>
+			</button>
+		{/each}
+		<br />
+	{/if}
+
+	<div bind:this={element} />
+	{#each awarenessState as item}
+		<!-- content here -->
+		{JSON.stringify(item.user.mouseX)} <br />
+		<div
+			class="mousepointer"
+			style="--left: {item.user.mouseX}px;--top: {item.user.mouseY}px;--cursor-color: {item.user
+				.color};"
+		/>
 	{/each}
-	<br />
-{/if}
-
-<div bind:this={element} />
+	{JSON.stringify(awarenessState)}
+</div>
 
 <style>
 	:global(.ProseMirror) {
 		border: 1px solid #ddd;
 		border-radius: 5px;
+	}
+	.mousepointer {
+		position: absolute;
+		background: var(--cursor-color);
+		width: 20px;
+		height: 20px;
+		border-radius: 0% 50% 50% 50%;
+		left: var(--left);
+		top: var(--top);
 	}
 </style>
