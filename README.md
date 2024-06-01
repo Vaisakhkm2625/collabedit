@@ -1,38 +1,34 @@
-# create-svelte
+# Collab edit
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Creating a project
+Simple collaborative editing software based with Svelte and [tiptap](https://tiptap.dev/)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## demo
 
+
+## Installation & usage
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+git clone git@github.com:Vaisakhkm2625/collabedit.git
+cd collabedit
+npm install
 
-## Developing
+# start websocket socker server
+node ./bin/hocuspocserver.js
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+# start the server
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
+got to `http://localhost:5173/collab/<document id>` in your browser 
+ eg: [collabedit - dog](http://localhost:5173/collab/dog) 
 
-## Building
+open same in another browser
 
-To create a production version of your app:
 
-```bash
-npm run build
-```
+## features
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- real-time collaborative editing
+- real-time cursor position
+- real-time selection
+- change color and name of cursor
