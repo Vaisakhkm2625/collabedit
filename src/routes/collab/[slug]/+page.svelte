@@ -1,6 +1,8 @@
 <script>
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 
+	export let data;
+
 	import { Editor } from '@tiptap/core';
 	import { StarterKit } from '@tiptap/starter-kit';
 	import Collaboration from '@tiptap/extension-collaboration';
@@ -21,7 +23,7 @@
 
 	let provider = new HocuspocusProvider({
 		url: 'ws://127.0.0.1:1234',
-		name: 'example-document',
+		name: data.docid, //document name
 		document: ydoc,
 		onAwarenessUpdate: ({ states }) => {
 			console.log(states);
@@ -239,9 +241,10 @@
 >
 	<h1 style="text-align: center;">Collab Edit</h1>
 
-	name: {random_name}
-	{random_color}
-	<input type="text" bind:value={random_name} on:change={updateAwareness} />
+	<div>
+		<input type="text" bind:value={random_name} on:change={updateAwareness} />
+		<input type="color" bind:value={random_color} on:change={updateAwareness} />
+	</div>
 
 	{#if editor}
 		<br />
@@ -256,14 +259,14 @@
 	<div bind:this={element} />
 	{#each awarenessState as item}
 		<!-- content here -->
-		{JSON.stringify(item.user.mouseX)} <br />
+		<!-- {JSON.stringify(item.user.mouseX)} <br /> -->
 		<div
 			class="mousepointer"
 			style="--left: {item.user.mouseX}px;--top: {item.user.mouseY}px;--cursor-color: {item.user
 				.color};"
 		/>
 	{/each}
-	{JSON.stringify(awarenessState)}
+	<!-- {JSON.stringify(awarenessState)} -->
 </div>
 
 <style>
