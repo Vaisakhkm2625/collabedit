@@ -6,6 +6,12 @@ Simple collaborative editing software based with Svelte and [tiptap](https://tip
 ## demo
 
 
+
+https://github.com/Vaisakhkm2625/collabedit/assets/68694876/74dab6a5-093f-42ca-8735-2d7d4fea3ce7
+
+
+
+
 ## Installation & usage
 ```bash
 
