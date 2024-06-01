@@ -235,7 +235,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	on:mousemove={(e) => {
-		m = { x: e.clientX, y: e.clientY };
+		m = { x: e.pageX, y: e.pageY };
+		console.log(e);
 		updateAwareness();
 	}}
 >
@@ -260,11 +261,13 @@
 	{#each awarenessState as item}
 		<!-- content here -->
 		<!-- {JSON.stringify(item.user.mouseX)} <br /> -->
-		<div
-			class="mousepointer"
-			style="--left: {item.user.mouseX}px;--top: {item.user.mouseY}px;--cursor-color: {item.user
-				.color};"
-		/>
+		{#if item.user.name != random_name}
+			<div
+				class="mousepointer"
+				style="--left: {item.user.mouseX}px;--top: {item.user.mouseY}px;--cursor-color: {item.user
+					.color};"
+			/>
+		{/if}
 	{/each}
 	<!-- {JSON.stringify(awarenessState)} -->
 </div>
